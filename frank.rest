@@ -1,0 +1,37 @@
+
+### Get all events
+GET http://localhost:8080/events
+
+# Get one event from MongoDB
+
+# GET http://localhost:8080/events/6aa7d18101b6ffa7ce2ed51f
+
+POST http://localhost:8080/events
+Content-Type: application/json
+
+{
+  "title": "Science F 2070",
+  "description": "Annu school science fair showcasing student projects in physics, chemistry, and biology.",
+  "date": "2026-10-05T09:00:00",
+  "location": "Main Hl"
+}
+
+
+# update 
+
+# PUT http://localhost:8080/events
+# Content-Type: application/json
+
+# {
+   
+  
+#     "title": "Science Fair 2070",
+#     "description": "Ann school science fair showcasing student projects in physics, chemistry, and biology.",
+#     "date": "2026-10-05T09:00:00",
+#     "location": "Main Hall"
+   
+  
+# }
+
+  ### Delete one event from MongoDB
+  DELETE http://localhost:8080/events/6aa7d18101b6ffa7ce2ed51f

@@ -1,0 +1,76 @@
+[
+  {
+  
+    "title": "Science Fair 2026",
+    "description": "Annual school science fair showcasing student projects in physics, chemistry, and biology.",
+    "date": "2026-10-05T09:00:00",
+    "location": "Main Hall"
+   
+  },
+  {
+   
+    "title": "Math Olympiad",
+    "description": "Competition for students to solve challenging math problems.",
+    "date": "2026-09-20T10:00:00",
+    "location": "Room 204"
+  },
+  {
+
+    "title": "Debate Tournament",
+    "description": "Inter-school debate competition on current issues.",
+    "date": "2026-11-01T14:00:00",
+    "location": "Auditorium"
+   
+  },
+  {
+  
+    "title": "Hackathon",
+    "description": "24-hour coding challenge for students to build innovative apps.",
+    "date": "2026-12-10T08:00:00",
+    "location": "Computer Lab"
+   
+  },
+  {
+ 
+    "title": "Sports Day",
+    "description": "Annual athletics and games for all students.",
+    "date": "2026-10-15T09:00:00",
+    "location": "School Field"
+    
+  },
+  {
+   
+    "title": "Music Concert",
+    "description": "Students showcase their musical talents.",
+    "date": "2026-11-20T18:00:00",
+    "location": "Main Hall"
+  },
+  {
+  
+    "title": "Art Exhibition",
+    "description": "Display of student artwork and creative projects.",
+    "date": "2026-09-25T13:00:00",
+    "location": "Art Room"
+  },
+  {
+   
+    "title": "Career Fair",
+    "description": "Students meet professionals and explore career options.",
+    "date": "2026-10-30T09:00:00",
+    "location": "Gymnasium"
+  },
+  {
+  
+    "title": "Coding Workshop",
+    "description": "Hands-on workshop introducing students to web development.",
+    "date": "2026-09-18T15:00:00",
+    "location": "Lab 2"
+  },
+  {
+   
+    "title": "Drama Festival",
+    "description": "Students perform plays and skits.",
+    "date": "2026-12-01T17:00:00",
+    "location": "Auditorium"
+  }
+]
