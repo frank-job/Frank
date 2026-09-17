@@ -1,37 +1,30 @@
-
 ### Get all events
 GET http://localhost:8080/events
 
-# Get one event from MongoDB
+### Get single event by ID (Replace with a valid 24-char hex ID from your DB)
+GET http://localhost:8080/events/6aa7d19c01b6ffa7ce2ed520
 
-# GET http://localhost:8080/events/6aa7d18101b6ffa7ce2ed51f
-
+### Create a new event
 POST http://localhost:8080/events
 Content-Type: application/json
 
 {
-  "title": "Science F 2070",
-  "description": "Annu school science fair showcasing student projects in physics, chemistry, and biology.",
-  "date": "2026-10-05T09:00:00",
-  "location": "Main Hl"
+  "title": "Tech Conference 2026",
+  "description": "Annual web development and API showcase",
+  "date": "2026-11-15",
+  "location": "Convention Center Room A"
 }
 
+### Update an existing event (Replace with a valid ID)
+PUT http://localhost:8080/events/6aaba9cc3691eece10f6e033
+Content-Type: application/json
 
-# update 
+{
+  "title": "Updated Tech Conference 2026",
+  "description": "Updated description with new speakers",
+  "date": "2026-11-16",
+  "location": "Main Auditorium"
+}
 
-# PUT http://localhost:8080/events
-# Content-Type: application/json
-
-# {
-   
-  
-#     "title": "Science Fair 2070",
-#     "description": "Ann school science fair showcasing student projects in physics, chemistry, and biology.",
-#     "date": "2026-10-05T09:00:00",
-#     "location": "Main Hall"
-   
-  
-# }
-
-  ### Delete one event from MongoDB
-  DELETE http://localhost:8080/events/6aa7d18101b6ffa7ce2ed51f
+### Delete an event (Replace with a valid ID)
+DELETE http://localhost:8080/events/6aaba9cc3691eece10f6e033
