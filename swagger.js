@@ -7,14 +7,6 @@ const swaggerAutogen = require('swagger-autogen')();
   },
   host: 'localhost:8080',
   schemes: ['http'],
-  securityDefinitions: {
-    bearerAuth: {
-      type: 'apiKey',
-      name: 'Authorization',
-      in: 'header',
-      description: 'Enter: Bearer {token}'
-    }
-  },
   definitions: {
     Event: {
       title: 'string',

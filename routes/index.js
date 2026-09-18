@@ -1,8 +1,21 @@
 const router = require('express').Router();
 
-router.get('/', (req, res)  => {res.send('hello world')});
+const ensureLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return next();
+    }
 
-router.use('/auth', require('./auth'));
-router.use('/events', require('./events'));
+    return res.status(401).send(`Hello world. Please log in with GitHub at <a href="/login">/login</a> to access the app.`);
+};
+
+router.get('/', (req, res) => {
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return res.send(`Hello world, ${req.user.username || 'GitHub user'}! You are logged in. <a href="/logout">Logout</a>`);
+    }
+
+    return res.send(`Hello world. Please log in with GitHub: <a href="/login">/login</a>`);
+});
+
+router.use('/events', ensureLoggedIn, require('./events'));
 
 module.exports = router;

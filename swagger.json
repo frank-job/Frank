@@ -10,14 +10,6 @@
   "schemes": [
     "http"
   ],
-  "securityDefinitions": {
-    "bearerAuth": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header",
-      "description": "Enter: Bearer {token}"
-    }
-  },
   "paths": {
     "/": {
       "get": {
@@ -42,11 +34,6 @@
         }
       },
       "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "description": "",
         "parameters": [
           {
@@ -110,11 +97,6 @@
         }
       },
       "put": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "description": "",
         "parameters": [
           {
@@ -163,11 +145,6 @@
         }
       },
       "delete": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "description": "",
         "parameters": [
           {

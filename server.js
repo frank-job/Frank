@@ -1,21 +1,46 @@
+require('dotenv').config();
+
 const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
 const app = express();
 const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const { setupPassport } = require('./config/passport');
 
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+setupPassport();
 
-const port = process.env.PORT || 8080
+const ensureAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return next();
+    }
+    return res.redirect('/');
+};
+
+app.use('/api-docs', ensureAuthenticated, swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'frank-session-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Z-Key'
+        'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization'
     );
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
     if (req.method === 'OPTIONS') {
@@ -24,7 +49,31 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/', require('./routes'))
+app.get('/login', (req, res) => {
+    if (!process.env.GITHUB_CLIENT_ID) {
+        return res.status(500).send('GitHub OAuth is not configured. Add GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET.');
+    }
+    return passport.authenticate('github', { scope: ['user:email'] })(req, res);
+});
+
+app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/' }),
+    (req, res) => {
+        req.session.user = req.user;
+        res.redirect('/');
+    }
+);
+
+app.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) { return next(err); }
+        req.session.destroy(() => {
+            res.redirect('/');
+        });
+    });
+});
+
+app.use('/', require('./routes'));
 
 app.use((error, req, res, next) => {
     console.error(error);
