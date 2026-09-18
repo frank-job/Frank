@@ -16,8 +16,12 @@ const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated && req.isAuthenticated()) {
         return next();
     }
-    return res.redirect('/');
+    return res.redirect('/api-docs');
 };
+
+app.get('/swagger', (req, res) => {
+    res.redirect('/api-docs');
+});
 
 app.use('/api-docs', ensureAuthenticated, swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
