@@ -12,19 +12,6 @@ const { setupPassport } = require('./config/passport');
 
 setupPassport();
 
-const ensureAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated && req.isAuthenticated()) {
-        return next();
-    }
-    return res.redirect('/api-docs');
-};
-
-app.get('/swagger', (req, res) => {
-    res.redirect('/api-docs');
-});
-
-app.use('/api-docs', ensureAuthenticated, swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
 const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
@@ -39,6 +26,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.get('/swagger', (req, res) => {
+    res.redirect('/api-docs');
+});
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

@@ -5,8 +5,8 @@ const swaggerAutogen = require('swagger-autogen')();
     title: 'Frank API',
     description: 'API documentation for Events',
   },
-  host: 'localhost:8080',
-  schemes: ['http'],
+  host: 'frank-5580.onrender.com',
+  schemes: ['https'],
   definitions: {
     Event: {
       title: 'string',
