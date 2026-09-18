@@ -14,6 +14,8 @@ setupPassport();
 
 const port = process.env.PORT || 8080;
 
+app.set('trust proxy', 1);
+
 app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SESSION_SECRET || 'frank-session-secret',
@@ -21,17 +23,17 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true
-    }
+        httpOnly: true,
+    },
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/swagger', (req, res) => {
-    res.redirect('/api-docs');
-});
-
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+app.get('/swagger', (req, res) => {
+    res.redirect('/api-docs/');
+});
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -57,7 +59,7 @@ app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
     (req, res) => {
         req.session.user = req.user;
-        return res.redirect('/api-docs');
+        return res.redirect('/api-docs/');
     }
 );
 
@@ -88,9 +90,10 @@ app.use((error, req, res, next) => {
 
 mongodb.initDB((err) => {
     if(err){
-        console.log(err);
+        console.log('Warning: MongoDB connection failed:', err.message || err);
     }
     else {
-        app.listen(port, () => {console.log(`Database is listening and node is running on port http://localhost:${port}`)});
+        console.log('MongoDB connected successfully');
     }
+    app.listen(port, () => {console.log(`Database is listening and node is running on port http://localhost:${port}`)});
 });

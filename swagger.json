@@ -8,6 +8,7 @@
   "host": "frank-5580.onrender.com",
   "basePath": "/",
   "schemes": [
+    "http",
     "https"
   ],
   "paths": {
