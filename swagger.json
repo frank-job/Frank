@@ -5,8 +5,8 @@
     "description": "API documentation for Events and Organizers",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
-  "basePath": "/",
+  "host": "frank-5580.onrender.com",
+  "basePath": "//",
   "schemes": [
     "https"
   ],
