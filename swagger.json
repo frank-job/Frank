@@ -2,13 +2,13 @@
   "swagger": "2.0",
   "info": {
     "title": "Frank API",
-    "description": "API documentation for Events",
+    "description": "API documentation for Events and Organizers",
     "version": "1.0.0"
   },
-  "host": "frank-5580.onrender.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
@@ -24,12 +24,12 @@
     "/events/": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -39,25 +39,35 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "title": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
                 },
                 "description": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
                 },
                 "date": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
                 },
                 "location": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
+                },
+                "category": {
+                  "example": "any"
+                },
+                "organizer": {
+                  "example": "any"
+                },
+                "capacity": {
+                  "example": "any"
+                },
+                "isPublic": {
+                  "example": "any"
+                },
+                "ticketPrice": {
+                  "example": "any"
                 }
               }
             }
@@ -66,6 +76,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
@@ -76,9 +89,6 @@
     "/events/{id}": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "id",
@@ -93,6 +103,12 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -108,36 +124,49 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "title": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
                 },
                 "description": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
                 },
                 "date": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
                 },
                 "location": {
-                  "type": "string",
-                  "example": "string"
+                  "example": "any"
+                },
+                "category": {
+                  "example": "any"
+                },
+                "organizer": {
+                  "example": "any"
+                },
+                "capacity": {
+                  "example": "any"
+                },
+                "isPublic": {
+                  "example": "any"
+                },
+                "ticketPrice": {
+                  "example": "any"
                 }
               }
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -161,6 +190,187 @@
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organizers/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                },
+                "role": {
+                  "example": "any"
+                },
+                "department": {
+                  "example": "any"
+                },
+                "office": {
+                  "example": "any"
+                },
+                "experience": {
+                  "example": "any"
+                },
+                "bio": {
+                  "example": "any"
+                },
+                "isActive": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organizers/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                },
+                "role": {
+                  "example": "any"
+                },
+                "department": {
+                  "example": "any"
+                },
+                "office": {
+                  "example": "any"
+                },
+                "experience": {
+                  "example": "any"
+                },
+                "bio": {
+                  "example": "any"
+                },
+                "isActive": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -172,21 +382,296 @@
     "Event": {
       "type": "object",
       "properties": {
-        "title": {
+        "type": {
           "type": "string",
-          "example": "string"
+          "example": "object"
         },
-        "description": {
-          "type": "string",
-          "example": "string"
+        "required": {
+          "type": "array",
+          "example": [
+            "title",
+            "description",
+            "date",
+            "location",
+            "category",
+            "organizer",
+            "capacity",
+            "isPublic",
+            "ticketPrice"
+          ],
+          "items": {
+            "type": "string"
+          }
         },
-        "date": {
+        "properties": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Science Fair 2026"
+                }
+              }
+            },
+            "description": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Annual school science fair."
+                }
+              }
+            },
+            "date": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "10/05/2026"
+                }
+              }
+            },
+            "location": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Main Hall"
+                }
+              }
+            },
+            "category": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Academic"
+                }
+              }
+            },
+            "organizer": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Science Department"
+                }
+              }
+            },
+            "capacity": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "example": {
+                  "type": "number",
+                  "example": 250
+                }
+              }
+            },
+            "isPublic": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "example": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            },
+            "ticketPrice": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "example": {
+                  "type": "number",
+                  "example": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Organizer": {
+      "type": "object",
+      "properties": {
+        "type": {
           "type": "string",
-          "example": "string"
+          "example": "object"
         },
-        "location": {
-          "type": "string",
-          "example": "string"
+        "required": {
+          "type": "array",
+          "example": [
+            "name",
+            "email",
+            "phone",
+            "role",
+            "department",
+            "office",
+            "experience",
+            "bio",
+            "isActive"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Taylor Morgan"
+                }
+              }
+            },
+            "email": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "taylor@example.com"
+                }
+              }
+            },
+            "phone": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "+1 555-123-4567"
+                }
+              }
+            },
+            "role": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Coordinator"
+                }
+              }
+            },
+            "department": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Science"
+                }
+              }
+            },
+            "office": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Building A 204"
+                }
+              }
+            },
+            "experience": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "example": {
+                  "type": "number",
+                  "example": 8
+                }
+              }
+            },
+            "bio": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Coordinates academic events and student programs."
+                }
+              }
+            },
+            "isActive": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "example": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
         }
       }
     }
