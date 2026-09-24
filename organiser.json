@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Science Department",
+    "email": "science@school.edu",
+    "phone": "+256700000001",
+    "role": "Teacher",
+    "department": "Academics",
+    "office": "Science Block Room 12",
+    "experience": 10,
+    "bio": "Coordinates annual science fairs, laboratory experiments, and STEM competitions.",
+    "isActive": true
+  },
+  {
+    "name": "Mathematics Faculty",
+    "email": "math@school.edu",
+    "phone": "+256700000002",
+    "role": "Coordinator",
+    "department": "Academics",
+    "office": "Math Wing Office 4B",
+    "experience": 6,
+    "bio": "Manages math olympiads, academic tutoring, and competitive problem-solving sessions.",
+    "isActive": true
+  },
+  {
+    "name": "Debate Club",
+    "email": "debate@school.edu",
+    "phone": "+256700000003",
+    "role": "Volunteer",
+    "department": "Extracurriculars",
+    "office": "Student Center Room 201",
+    "experience": 3,
+    "bio": "Organizes inter-school public speaking contests, debate workshops, and leadership forums.",
+    "isActive": true
+  },
+  {
+    "name": "Tech Innovation Club",
+    "email": "tech@school.edu",
+    "phone": "+256700000004",
+    "role": "Coordinator",
+    "department": "Technology",
+    "office": "Computer Lab 1",
+    "experience": 5,
+    "bio": "Leads annual hackathons, programming bootcamps, and robotics projects.",
+    "isActive": true
+  },
+  {
+    "name": "Athletics Department",
+    "email": "sports@school.edu",
+    "phone": "+256700000005",
+    "role": "Manager",
+    "department": "Sports",
+    "office": "Gym Building Room 102",
+    "experience": 8,
+    "bio": "Oversees all inter-school athletic events, sports day preparations, and physical training programs.",
+    "isActive": true
+  }
+]

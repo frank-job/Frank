@@ -11,8 +11,13 @@ Content-Type: application/json
 {
   "title": "Tech Conference 2026",
   "description": "Annual web development and API showcase",
-  "date": "2026-11-15",
-  "location": "Convention Center Room A"
+  "date": "15/11/2026",
+  "location": "Convention Center Room A",
+  "category": "Technology",
+  "organizer": "Tech Innovation Club",
+  "capacity": 200,
+  "isPublic": true,
+  "ticketPrice": 15
 }
 
 ### Update an existing event (Replace with a valid ID)
@@ -22,9 +27,52 @@ Content-Type: application/json
 {
   "title": "Updated Tech Conference 2026",
   "description": "Updated description with new speakers",
-  "date": "2026-11-16",
-  "location": "Main Auditorium"
+  "date": "16/11/2026",
+  "location": "Main Auditorium",
+  "category": "Technology",
+  "organizer": "Tech Innovation Club",
+  "capacity": 250,
+  "isPublic": true,
+  "ticketPrice": 20
 }
 
 ### Delete an event (Replace with a valid ID)
 DELETE http://localhost:8080/events/6aaba9cc3691eece10f6e033
+
+### Get all organizers
+GET http://localhost:8080/organizers
+
+### Create an organizer
+POST http://localhost:8080/organizers
+Content-Type: application/json
+
+{
+  "name": "Taylor Morgan",
+  "email": "taylor.morgan@example.com",
+  "phone": "+1 555-123-4567",
+  "role": "Coordinator",
+  "department": "Science",
+  "office": "Building A 204",
+  "experience": 8,
+  "bio": "Coordinates academic events and student programs.",
+  "isActive": true
+}
+
+### Update an organizer (Replace with a valid ID)
+PUT http://localhost:8080/organizers/6aaba9cc3691eece10f6e033
+Content-Type: application/json
+
+{
+  "name": "Taylor Morgan",
+  "email": "taylor.morgan@example.com",
+  "phone": "+1 555-123-4567",
+  "role": "Manager",
+  "department": "Science",
+  "office": "Building A 205",
+  "experience": 9,
+  "bio": "Coordinates academic events and student programs.",
+  "isActive": true
+}
+
+### Delete an organizer (Replace with a valid ID)
+DELETE http://localhost:8080/organizers/6aaba9cc3691eece10f6e033

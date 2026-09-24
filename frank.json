@@ -1,76 +1,101 @@
 [
   {
-  
     "title": "Science Fair 2026",
     "description": "Annual school science fair showcasing student projects in physics, chemistry, and biology.",
-    "date": "2026-10-05T09:00:00",
-    "location": "Main Hall"
-   
+    "date": "05/10/2026",
+    "location": "Main Hall",
+    "category": "Academic",
+    "organizer": "Science Department",
+    "capacity": 250,
+    "isPublic": true,
+    "ticketPrice": 0
   },
   {
-   
     "title": "Math Olympiad",
     "description": "Competition for students to solve challenging math problems.",
-    "date": "2026-09-20T10:00:00",
-    "location": "Room 204"
+    "date": "20/09/2026",
+    "location": "Room 204",
+    "category": "Academic",
+    "organizer": "Mathematics Faculty",
+    "capacity": 100,
+    "isPublic": false,
+    "ticketPrice": 5
   },
   {
-
     "title": "Debate Tournament",
     "description": "Inter-school debate competition on current issues.",
-    "date": "2026-11-01T14:00:00",
-    "location": "Auditorium"
-   
+    "date": "01/11/2026",
+    "location": "Auditorium",
+    "category": "Extracurricular",
+    "organizer": "Debate Club",
+    "capacity": 300,
+    "isPublic": true,
+    "ticketPrice": 0
   },
   {
-  
-    "title": "Hackathon",
+    "title": "Hackathon 2026",
     "description": "24-hour coding challenge for students to build innovative apps.",
-    "date": "2026-12-10T08:00:00",
-    "location": "Computer Lab"
-   
+    "date": "10/12/2026",
+    "location": "Computer Lab",
+    "category": "Technology",
+    "organizer": "Tech Innovation Club",
+    "capacity": 80,
+    "isPublic": true,
+    "ticketPrice": 10
   },
   {
- 
     "title": "Sports Day",
-    "description": "Annual athletics and games for all students.",
-    "date": "2026-10-15T09:00:00",
-    "location": "School Field"
-    
+    "description": "Annual athletics and games competition for all students.",
+    "date": "15/10/2026",
+    "location": "School Field",
+    "category": "Sports",
+    "organizer": "Athletics Department",
+    "capacity": 500,
+    "isPublic": true,
+    "ticketPrice": 0
   },
   {
-   
     "title": "Music Concert",
-    "description": "Students showcase their musical talents.",
-    "date": "2026-11-20T18:00:00",
-    "location": "Main Hall"
+    "description": "Students showcase their musical performance and vocal talents.",
+    "date": "20/11/2026",
+    "location": "Main Hall",
+    "category": "Arts",
+    "organizer": "Music Society",
+    "capacity": 350,
+    "isPublic": true,
+    "ticketPrice": 15
   },
   {
-  
     "title": "Art Exhibition",
-    "description": "Display of student artwork and creative projects.",
-    "date": "2026-09-25T13:00:00",
-    "location": "Art Room"
+    "description": "Display of student artwork and creative design projects.",
+    "date": "25/09/2026",
+    "location": "Art Room",
+    "category": "Arts",
+    "organizer": "Fine Arts Department",
+    "capacity": 150,
+    "isPublic": false,
+    "ticketPrice": 0
   },
   {
-   
     "title": "Career Fair",
-    "description": "Students meet professionals and explore career options.",
-    "date": "2026-10-30T09:00:00",
-    "location": "Gymnasium"
+    "description": "Students meet industry professionals to explore career options.",
+    "date": "30/10/2026",
+    "location": "Gymnasium",
+    "category": "Career",
+    "organizer": "Guidance Counseling",
+    "capacity": 400,
+    "isPublic": true,
+    "ticketPrice": 0
   },
   {
-  
-    "title": "Coding Workshop",
-    "description": "Hands-on workshop introducing students to web development.",
-    "date": "2026-09-18T15:00:00",
-    "location": "Lab 2"
-  },
-  {
-   
     "title": "Drama Festival",
-    "description": "Students perform plays and skits.",
-    "date": "2026-12-01T17:00:00",
-    "location": "Auditorium"
+    "description": "Students perform theatrical plays, monologues, and skits.",
+    "date": "01/12/2026",
+    "location": "Auditorium",
+    "category": "Arts",
+    "organizer": "Drama Guild",
+    "capacity": 300,
+    "isPublic": true,
+    "ticketPrice": 8
   }
 ]
