@@ -53,7 +53,7 @@ app.get('/organizers/api-docs', (req, res) => res.redirect('/api-docs/'));
 app.get('/organizers/api-docs/', (req, res) => res.redirect('/api-docs/'));
 
 app.get('/', (req, res) => {
-    const user = req.session.user;
+    const user = req.user;
     const loginLink = `<a href="/auth/github">Login with GitHub</a>`;
     const logoutLink = `<a href="/auth/logout">Logout</a>`;
     
@@ -69,12 +69,8 @@ app.get('/auth/github',
 );
 
 app.get('/auth/github/callback',
-    passport.authenticate('github', {
-        failureRedirect: '/api-docs',
-        session: false
-    }),
+    passport.authenticate('github', { failureRedirect: '/api-docs' }),
     (req, res) => {
-        req.session.user = req.user;
         res.redirect('/');
     }
 );

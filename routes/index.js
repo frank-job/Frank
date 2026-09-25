@@ -7,4 +7,12 @@ router.get('/', (req, res) => {
 router.use('/events', require('./events'));
 router.use('/organizers', require('./organizers'));
 
+router.get('/login', passport.authenticate('github'), (req, res) => {});
+ 
+router.get('/logout', function(req, res, next) {
+req.logout(function(err) {
+if (err) { return next(err); }
+res.redirect('/');
+});
+});
 module.exports = router;
