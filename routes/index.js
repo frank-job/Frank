@@ -1,18 +1,27 @@
 const router = require('express').Router();
+const passport = require('passport');
 
 router.get('/', (req, res) => {
-    return res.send('Hello world. <a href="/api-docs">Swagger UI</a> | <a href="/events/api-docs">Events API docs</a> | <a href="/organizers/api-docs">Organizers API docs</a>');
+    const user = req.user;
+    const loginLink = `<a href="/auth/github">Login with GitHub</a>`;
+    const logoutLink = `<a href="/auth/logout">Logout</a>`;
+
+    if (user) {
+        res.send(`Logged in as ${user.username} | ${logoutLink} | <a href="/api-docs">API Docs</a>`);
+    } else {
+        res.send(`Welcome! ${loginLink} | <a href="/api-docs">API Docs</a>`);
+    }
+});
+
+router.get('/login', passport.authenticate('github'), (req, res) => {});
+
+router.get('/logout', (req, res) => {
+    req.logout(() => {});
+    req.session.destroy();
+    res.redirect('/');
 });
 
 router.use('/events', require('./events'));
 router.use('/organizers', require('./organizers'));
 
-router.get('/login', passport.authenticate('github'), (req, res) => {});
- 
-router.get('/logout', function(req, res, next) {
-req.logout(function(err) {
-if (err) { return next(err); }
-res.redirect('/');
-});
-});
 module.exports = router;
