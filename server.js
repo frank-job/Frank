@@ -6,27 +6,40 @@ const https = require('https');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const session = require('express-session');
+const cors = require('cors');
 const mongodb = require('./data/database');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocuments = require('./swagger-documents');
-const passport = require('passport');
 const { setupPassport } = require('./config/passport');
 
 const port = process.env.PORT || 8080;
 const httpsPort = process.env.HTTPS_PORT || 8443;
 
-app.use(bodyParser.json());
-
-app.use(session({
-    secret: process.env.SESSION_SECRET || 'fallback-secret',
+app
+  .use(bodyParser.json())
+  .use(session({
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
+    saveUninitialized: true,
+  }))
+  .use(passport.initialize())
+  .use(passport.session())
+  .use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "POST, GET, PUT, PATCH, OPTIONS, DELETE"
+    );
+    next();
+  })
+  .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
+  .use(cors({ origin: '*' }));
 
 setupPassport();
 
@@ -39,21 +52,8 @@ app.get('/events/api-docs/', (req, res) => res.redirect('/api-docs/'));
 app.get('/organizers/api-docs', (req, res) => res.redirect('/api-docs/'));
 app.get('/organizers/api-docs/', (req, res) => res.redirect('/api-docs/'));
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization'
-    );
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(204);
-    }
-    next();
-});
-
 app.get('/', (req, res) => {
-    const user = req.user;
+    const user = req.session.user;
     const loginLink = `<a href="/auth/github">Login with GitHub</a>`;
     const logoutLink = `<a href="/auth/logout">Logout</a>`;
     
@@ -69,8 +69,12 @@ app.get('/auth/github',
 );
 
 app.get('/auth/github/callback',
-    passport.authenticate('github', { failureRedirect: '/api-docs' }),
+    passport.authenticate('github', {
+        failureRedirect: '/api-docs',
+        session: false
+    }),
     (req, res) => {
+        req.session.user = req.user;
         res.redirect('/');
     }
 );
