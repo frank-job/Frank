@@ -8,6 +8,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const passport = require('passport')
 const session = require('express-session')
+const { MongoStore } = require('connect-mongo')
 const cors = require('cors')
 const mongodb = require('./data/database');
 const swaggerUI = require('swagger-ui-express');
@@ -26,6 +27,10 @@ app
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
         saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_URL,
+            collectionName: 'sessions',
+        }),
         cookie: {
             httpOnly: true,
             sameSite: 'lax',
