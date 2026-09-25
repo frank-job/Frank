@@ -5,10 +5,10 @@
     "description": "API documentation for Events and Organizers",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "frank-5580.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {
