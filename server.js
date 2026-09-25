@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
     if (user) {
         res.send(`Logged in as ${user.username} | ${logoutLink} | <a href="/api-docs">API Docs</a>`);
     } else {
-        res.send(`Welcome! ${loginLink} | <a href="/api-docs">API Docs</a>`);
+        res.send(`Welcome! ${loginLink}`);
     }
 });
 
