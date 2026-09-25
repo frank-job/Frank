@@ -6,16 +6,18 @@ const https = require('https');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const passport = require('passport');
-const session = require('express-session');
-const cors = require('cors');
+const passport = require('passport')
+const session = require('express-session')
+const cors = require('cors')
 const mongodb = require('./data/database');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocuments = require('./swagger-documents');
 const { setupPassport } = require('./config/passport');
 
-const port = process.env.PORT || 8080;
-const httpsPort = process.env.HTTPS_PORT || 8443;
+const port = process.env.PORT || 8080
+const httpsPort = process.env.HTTPS_PORT || 8443
+
+app.use(bodyParser.json());
 
 app
   .use(bodyParser.json())
@@ -39,7 +41,7 @@ app
     next();
   })
   .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
-  .use(cors({ origin: '*' }));
+  .use(cors({ origin: '*' }))
 
 setupPassport();
 
@@ -53,10 +55,10 @@ app.get('/organizers/api-docs', (req, res) => res.redirect('/api-docs/'));
 app.get('/organizers/api-docs/', (req, res) => res.redirect('/api-docs/'));
 
 app.get('/', (req, res) => {
-    const user = req.user;
-    const loginLink = `<a href="/auth/github">Login with GitHub</a>`;
-    const logoutLink = `<a href="/auth/logout">Logout</a>`;
-    
+    const user = req.session.user;
+    const loginLink = `<a href="/login">Login with GitHub</a>`;
+    const logoutLink = `<a href="/logout">Logout</a>`;
+
     if (user) {
         res.send(`Logged in as ${user.username} | ${logoutLink} | <a href="/api-docs">API Docs</a>`);
     } else {
@@ -64,23 +66,39 @@ app.get('/', (req, res) => {
     }
 });
 
-app.get('/auth/github',
-    passport.authenticate('github', { scope: ['user:email'] })
-);
+app.get('/login', passport.authenticate('github', { scope: ['user:email'] }));
 
-app.get('/auth/github/callback',
-    passport.authenticate('github', { failureRedirect: '/api-docs' }),
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+app.get('/github/callback',
+    passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
     (req, res) => {
+        req.session.user = req.user;
         res.redirect('/');
     }
 );
 
-app.get('/auth/logout', (req, res) => {
+app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
+    (req, res) => {
+        req.session.user = req.user;
+        res.redirect('/');
+    }
+);
+
+app.get('/logout', (req, res) => {
+    req.logout(() => {});
     req.session.destroy();
     res.redirect('/');
 });
 
-app.use('/', require('./routes'));
+app.get('/auth/logout', (req, res) => {
+    req.logout(() => {});
+    req.session.destroy();
+    res.redirect('/');
+});
+
+app.use('/', require('./routes'))
 
 app.use((error, req, res, next) => {
     console.error(error);
@@ -106,7 +124,6 @@ mongodb.initDB((err) => {
             key: fs.readFileSync(process.env.SSL_KEY_PATH),
             cert: fs.readFileSync(process.env.SSL_CERT_PATH),
         };
-
         https.createServer(sslOptions, app).listen(httpsPort, () => {
             console.log(`Database is listening and node is running on https://localhost:${httpsPort}`);
         });
