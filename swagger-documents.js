@@ -1,6 +1,10 @@
 const swaggerDocument = require('./swagger.json');
-const swaggerScheme = process.env.SWAGGER_SCHEME || 'http';
-const swaggerHost = process.env.SWAGGER_HOST || 'localhost:8080';
+const swaggerScheme = process.env.SWAGGER_SCHEME || (
+    process.env.NODE_ENV === 'production' ? 'https' : 'http'
+);
+const swaggerHost = process.env.SWAGGER_HOST ||
+    process.env.RENDER_EXTERNAL_HOSTNAME ||
+    (process.env.NODE_ENV === 'production' ? 'frank-5580.onrender.com' : 'localhost:8080');
 
 const swaggerConnection = {
     host: swaggerHost,
