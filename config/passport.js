@@ -65,28 +65,11 @@ const setupPassport = () => {
     }));
 
     passport.serializeUser((user, done) => {
-        const id = user._id ? user._id.toString() : user.id;
-        done(null, id);
+        done(null, user);
     });
 
-    passport.deserializeUser(async (id, done) => {
-        try {
-            // Guard against invalid ObjectId strings
-            if (!ObjectId.isValid(id)) {
-                return done(null, false);
-            }
-
-            const users = getUserCollection();
-            const user = await users.findOne({ _id: new ObjectId(id) });
-            
-            if (!user) {
-                return done(null, false);
-            }
-
-            done(null, user);
-        } catch (error) {
-            done(error);
-        }
+    passport.deserializeUser((user, done) => {
+        done(null, user);
     });
 };
 

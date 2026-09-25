@@ -6,14 +6,29 @@ const https = require('https');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const mongodb = require('./data/database');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocuments = require('./swagger-documents');
+const passport = require('passport');
+const { setupPassport } = require('./config/passport');
 
 const port = process.env.PORT || 8080;
 const httpsPort = process.env.HTTPS_PORT || 8443;
 
 app.use(bodyParser.json());
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'fallback-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+setupPassport();
 
 app.get('/api-docs/swagger.json', (req, res) => res.json(swaggerDocuments.all));
 app.get('/events/api-docs/swagger.json', (req, res) => res.json(swaggerDocuments.events));
@@ -35,6 +50,34 @@ app.use((req, res, next) => {
         return res.sendStatus(204);
     }
     next();
+});
+
+app.get('/', (req, res) => {
+    const user = req.user;
+    const loginLink = `<a href="/auth/github">Login with GitHub</a>`;
+    const logoutLink = `<a href="/auth/logout">Logout</a>`;
+    
+    if (user) {
+        res.send(`Logged in as ${user.username} | ${logoutLink} | <a href="/api-docs">API Docs</a>`);
+    } else {
+        res.send(`Welcome! ${loginLink} | <a href="/api-docs">API Docs</a>`);
+    }
+});
+
+app.get('/auth/github',
+    passport.authenticate('github', { scope: ['user:email'] })
+);
+
+app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/api-docs' }),
+    (req, res) => {
+        res.redirect('/');
+    }
+);
+
+app.get('/auth/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
 });
 
 app.use('/', require('./routes'));
