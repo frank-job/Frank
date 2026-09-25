@@ -13,7 +13,7 @@
 // const swaggerUI = require('swagger-ui-express');
 // const swaggerDocuments = require('./swagger-documents');
 // const { setupPassport } = require('./config/passport');
-
+// isAuthenticated,
 // const port = process.env.PORT || 8080;
 // const httpsPort = process.env.HTTPS_PORT || 8443;
 
