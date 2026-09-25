@@ -17,6 +17,7 @@ const { setupPassport } = require('./config/passport');
 const port = process.env.PORT || 8080
 const httpsPort = process.env.HTTPS_PORT || 8443
 
+app.set('trust proxy', 1);
 app.use(bodyParser.json());
 
 app
@@ -24,7 +25,12 @@ app
   .use(session({
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
-    saveUninitialized: true,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production',
+        },
   }))
   .use(passport.initialize())
   .use(passport.session())
@@ -55,7 +61,7 @@ app.get('/organizers/api-docs', (req, res) => res.redirect('/api-docs/'));
 app.get('/organizers/api-docs/', (req, res) => res.redirect('/api-docs/'));
 
 app.get('/', (req, res) => {
-    const user = req.session.user;
+    const user = req.user || req.session.user;
     const loginLink = `<a href="/login">Login with GitHub</a>`;
     const logoutLink = `<a href="/logout">Logout</a>`;
 
@@ -71,17 +77,15 @@ app.get('/login', passport.authenticate('github', { scope: ['user:email'] }));
 app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
 
 app.get('/github/callback',
-    passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
+    passport.authenticate('github', { failureRedirect: '/api-docs' }),
     (req, res) => {
-        req.session.user = req.user;
         res.redirect('/');
     }
 );
 
 app.get('/auth/github/callback',
-    passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
+    passport.authenticate('github', { failureRedirect: '/api-docs' }),
     (req, res) => {
-        req.session.user = req.user;
         res.redirect('/');
     }
 );
